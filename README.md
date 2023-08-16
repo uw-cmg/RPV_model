@@ -2,10 +2,11 @@
 
 Ensemble neural network model for predicting transition temperature shifts of RPV alloys
 
-The model can be run via Binder:
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/uw-cmg/RPV_model/HEAD?labpath=https%3A%2F%2Fgithub.com%2Fuw-cmg%2FRPV_model%2Fblob%2Fmain%2FRun_RPV_model.ipynb)
+## The model can be run on Google Colab:
 
-If you find this model useful, please cite the original reference:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/uw-cmg/RPV_model/blob/main/Run_RPV_model_Colab.ipynb)
+
+## If you find this model useful, please cite the original reference:
 
 Jacobs, R., Yamamoto, T., Odette, G. R., Morgan, D. "Predictions and Uncertainty Estimates of Reactor Pressure Vessel Steel Embrittlement Using Machine Learning", submitted (2023).
 
