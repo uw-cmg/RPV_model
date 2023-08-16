@@ -1,0 +1,6 @@
+tensorflow
+keras==2.12.0
+scikit-learn
+numpy 
+pandas
+mastml
