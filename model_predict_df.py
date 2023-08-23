@@ -50,7 +50,7 @@ def get_preds_ebars(model, df_featurized, preprocessor, return_ebars=True):
         for i, x in df_featurized_scaled.iterrows():
             preds_per_data = list()
             for m in model.model.estimators_:
-                preds_per_data.append(m.predict(pd.DataFrame(x).T)) #pd.DataFrame(x).T
+                preds_per_data.append(m.predict(pd.DataFrame(x).T, verbose=0)) #pd.DataFrame(x).T
             preds_each.append(np.mean(preds_per_data))
             ebars_each.append(np.std(preds_per_data))
 
