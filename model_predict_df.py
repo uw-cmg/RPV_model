@@ -12,7 +12,7 @@ from keras.wrappers.scikit_learn import KerasRegressor
 import matplotlib.pyplot as plt
 from scipy.spatial.distance import cdist
 
-def rebuild_model():
+def rebuild_model(model_folder):
     PATH = os.getcwd()
 
     # We need to define the function that builds the network architecture
@@ -33,7 +33,7 @@ def rebuild_model():
     num_models = 10
     models = list()
     for i in range(num_models):
-        models.append(tf.keras.models.load_model(os.path.join(PATH, 'RPV_model/keras_model_' + str(i))))
+        models.append(tf.keras.models.load_model(os.path.join(PATH, 'RPV_model'+'/'+model_folder+'/keras_model_' + str(i))))
 
     model_bagged_keras_rebuild.model.estimators_ = models
     model_bagged_keras_rebuild.model.estimators_features_ = [np.arange(0, 9) for i in models]
@@ -69,14 +69,14 @@ def get_preds_ebars(model, df_featurized, preprocessor, return_ebars=True):
 
     return np.array(preds_each).ravel(), np.array(ebars_each_recal).ravel()
 
-def make_predictions_DNN(df_featurized):
+def make_predictions_DNN(df_featurized, model_folder):
     PATH = os.getcwd()
 
     # Rebuild the saved model
-    model = rebuild_model()
+    model = rebuild_model(model_folder)
 
     # Normalize the input features
-    preprocessor = joblib.load(os.path.join(PATH, 'RPV_model/StandardScaler.pkl'))
+    preprocessor = joblib.load(os.path.join(PATH, os.path.join('RPV_model', model_folder+'/StandardScaler.pkl')))
     
     # Get predictions and error bars from model
     preds, ebars = get_preds_ebars(model, df_featurized, preprocessor, return_ebars=True)
