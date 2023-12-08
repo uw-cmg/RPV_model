@@ -10,5 +10,5 @@ Note that this model was developed for academic research purposes and should not
 
 ## If you find this model useful, please cite the original reference:
 
-Jacobs, R., Yamamoto, T., Odette, G. R., Morgan, D. "Predictions and Uncertainty Estimates of Reactor Pressure Vessel Steel Embrittlement Using Machine Learning", submitted (2023).
+Jacobs, R., Yamamoto, T., Odette, G. R., Morgan, D. "Predictions and Uncertainty Estimates of Reactor Pressure Vessel Steel Embrittlement Using Machine Learning", Materials and Design, 236 (2023) (https://doi.org/10.1016/j.matdes.2023.112491).
 
