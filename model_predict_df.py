@@ -32,7 +32,7 @@ def rebuild_model(n_features, model_folder):
     num_models = 10
     models = list()
     for i in range(num_models):
-        models.append(tf.keras.models.load_model(os.path.join(model_folder, 'keras_model_' + str(i))))
+        models.append(tf.keras.models.load_model(os.path.join('RPV_model/'+model_folder, 'keras_model_' + str(i))))
 
     model_bagged_keras_rebuild.model.estimators_ = models
     model_bagged_keras_rebuild.model.estimators_features_ = [np.arange(0, n_features) for i in models]
@@ -75,7 +75,7 @@ def make_predictions_DNN(df_featurized, model_folder):
     model = rebuild_model(n_features, model_folder)
 
     # Normalize the input features
-    preprocessor = joblib.load(os.path.join(model_folder, 'StandardScaler.pkl'))
+    preprocessor = joblib.load(os.path.join('RPV_model/'+model_folder, 'StandardScaler.pkl'))
     
     # Get predictions and error bars from model
     preds, ebars = get_preds_ebars(model, df_featurized, preprocessor, return_ebars=True)
