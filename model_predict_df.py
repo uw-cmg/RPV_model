@@ -12,13 +12,13 @@ from keras.wrappers.scikit_learn import KerasRegressor
 import matplotlib.pyplot as plt
 from scipy.spatial.distance import cdist
 
-def rebuild_model(model_folder):
+def rebuild_model(n_features):
     PATH = os.getcwd()
 
     # We need to define the function that builds the network architecture
-    def keras_model():
+    def keras_model(n_features):
         model = Sequential()
-        model.add(Dense(1024, input_dim=9, kernel_initializer='normal', activation='relu'))
+        model.add(Dense(1024, input_dim=n_features, kernel_initializer='normal', activation='relu'))
         model.add(Dropout(0.3))
         model.add(Dense(1024, kernel_initializer='normal', activation='relu'))
         model.add(Dropout(0.3))
@@ -33,10 +33,10 @@ def rebuild_model(model_folder):
     num_models = 10
     models = list()
     for i in range(num_models):
-        models.append(tf.keras.models.load_model(os.path.join(PATH, 'RPV_model'+'/'+model_folder+'/keras_model_' + str(i))))
+        models.append(tf.keras.models.load_model(os.path.join(PATH, 'keras_model_' + str(i))))
 
     model_bagged_keras_rebuild.model.estimators_ = models
-    model_bagged_keras_rebuild.model.estimators_features_ = [np.arange(0, 9) for i in models]
+    model_bagged_keras_rebuild.model.estimators_features_ = [np.arange(0, n_features) for i in models]
 
     return model_bagged_keras_rebuild
 
@@ -50,7 +50,7 @@ def get_preds_ebars(model, df_featurized, preprocessor, return_ebars=True):
         for i, x in df_featurized_scaled.iterrows():
             preds_per_data = list()
             for m in model.model.estimators_:
-                preds_per_data.append(m.predict(pd.DataFrame(x).T, verbose=0)) #pd.DataFrame(x).T
+                preds_per_data.append(m.predict(pd.DataFrame(x).T)) #pd.DataFrame(x).T
             preds_each.append(np.mean(preds_per_data))
             ebars_each.append(np.std(preds_per_data))
 
@@ -69,14 +69,15 @@ def get_preds_ebars(model, df_featurized, preprocessor, return_ebars=True):
 
     return np.array(preds_each).ravel(), np.array(ebars_each_recal).ravel()
 
-def make_predictions_DNN(df_featurized, model_folder):
+def make_predictions_DNN(df_featurized):
     PATH = os.getcwd()
 
     # Rebuild the saved model
-    model = rebuild_model(model_folder)
+    n_features = df_featurized.shape[1]
+    model = rebuild_model(n_features)
 
     # Normalize the input features
-    preprocessor = joblib.load(os.path.join(PATH, os.path.join('RPV_model', model_folder+'/StandardScaler.pkl')))
+    preprocessor = joblib.load(os.path.join(PATH, 'StandardScaler.pkl'))
     
     # Get predictions and error bars from model
     preds, ebars = get_preds_ebars(model, df_featurized, preprocessor, return_ebars=True)
