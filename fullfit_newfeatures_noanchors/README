@@ -1,0 +1,1 @@
+RPV TTS neural network model fit to the full database, using set of 17 features (added flux, fluence, one-hot encoded product form) and no synthetic anchor points
