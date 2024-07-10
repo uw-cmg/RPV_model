@@ -1,0 +1,3 @@
+RPV TTS neural network model fit to the full database, using set of 11 features (added flux, fluence) and includes synthetic anchor points used in Jacobs '23 model
+
+For internal analysis, this model is sometimes referred to as the "Jacobs '24 OG anchors" model
